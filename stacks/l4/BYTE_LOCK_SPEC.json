@@ -1,0 +1,39 @@
+{
+ "oracle": "gpu-determinism / tf32-dispatch bit-reproducibility (GEMM M,N,K; fp32+allow_tf32)",
+ "polaris_task": "#11706 (delegalt Janos); L4-anchor #11715; bundle #11724",
+ "definition": "REPRODUCIBLE <=> a tf32-tensor-core dispatch a konfigbol determinalt (a tf32/fp32 divergencia STABIL minden input-seeden); NON_REPRODUCIBLE <=> ertek-fuggo (GREY, mixed engaged).",
+ "ground_truth": "tf32-vs-fp32 engaged (torch.equal) sok input-seeden (S=64); reproducible <=> engaged==0 vagy ==S.",
+ "stack_HASHED": {
+  "gpu": "NVIDIA L4",
+  "sm_arch": "sm_89",
+  "cuda": "12.8",
+  "cudnn": null,
+  "driver": "580.159.04",
+  "torch": "2.8.0+cu128"
+ },
+ "stack_metadata": {
+  "cublas": "a CUDA 12.8 runtimehoz csomagolt (torch 2.8.0+cu128); nincs a hashelt canon-ban, csak dokumentacio",
+  "cuda_driver_api": "13.0 (nvidia-smi fejlec); a torch-runtime CUDA=12.8"
+ },
+ "probe_grid": "dims {1,2,3,4,8,16}^3 = 216 config (diszkrimalo, nem-degenerate)",
+ "partition": {
+  "total": 216,
+  "non_reproducible_GREY": 25,
+  "reproducible": 191
+ },
+ "lookup_oracle_gate": {
+  "recall": 1.0,
+  "false_positives": 0,
+  "fp0": true,
+  "non_degenerate": true,
+  "note": "FP0+recall1.0 KONSTRUKCIO SZERINT az enumeralt gridre (a lookup == a mert ground-truth)"
+ },
+ "portable_rule_finding": "a 4090-derivalt egyszeru szabaly L4-en NEM FP0 (recall 0.68, FP=8); egyetlen min/max/K szabaly sem er FP0-t (legjobb 0.48 recall). A hatar HARDVER-SPECIFIKUS es pozicio-fuggo (K vs M/N). -> a per-stack lookup a becsuletes forma.",
+ "byte_locks": {
+  "rule_byte_lock": "ee285a698f4bee7208eba9add7a18a65a6ab20b02e68bb35568c578104ac93e8",
+  "rule_byte_lock_desc": "HARDVER-FUGGETLEN: a szabaly (oracle_reproducible) verdikt-vektora a 216-gridre. Minden GPU-n azonos.",
+  "ground_truth_byte_lock": "5070945ab9cc2204090253ec6f029fbd58df615a9dbc2de183c587d2dd59afe6",
+  "ground_truth_byte_lock_desc": "PER-STACK (a stack_HASHED-hez kotve), S=64. sha256({stack, sorted[config,regime]})."
+ },
+ "scope": "PER-STACK (stack_HASHED), az enumeralt 216-config-terre. NEM hordozhato formula."
+}

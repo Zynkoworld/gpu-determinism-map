@@ -1,0 +1,31 @@
+{
+ "oracle": "gpu-determinism / tf32-dispatch bit-reproducibility (GEMM M,N,K; fp32+allow_tf32)",
+ "definition": "REPRODUCIBLE <=> a tf32-TC dispatch a konfigbol determinalt (tf32/fp32 divergencia STABIL minden seeden); NON_REPRODUCIBLE <=> ertek-fuggo (GREY).",
+ "ground_truth": "tf32-vs-fp32 engaged sok input-seeden (S=64); reproducible <=> engaged 0 vagy S.",
+ "stack_HASHED": {
+  "gpu": "NVIDIA A100 80GB PCIe",
+  "sm_arch": "sm_80",
+  "cuda": "12.8",
+  "cudnn": null,
+  "driver": "580.159.04",
+  "torch": "2.8.0+cu128"
+ },
+ "probe_grid": "dims {1,2,3,4,8,16}^3 = 216 config (diszkrimalo, nem-degenerate)",
+ "partition": {
+  "total": 216,
+  "non_reproducible_GREY": 0,
+  "reproducible": 216
+ },
+ "lookup_oracle_gate": {
+  "recall": 1.0,
+  "false_positives": 0,
+  "fp0": true,
+  "non_degenerate": false,
+  "note": "FP0+recall1.0 KONSTRUKCIO SZERINT az enumeralt gridre (lookup == mert ground-truth)"
+ },
+ "byte_locks": {
+  "rule_byte_lock": "ee285a698f4bee7208eba9add7a18a65a6ab20b02e68bb35568c578104ac93e8",
+  "ground_truth_byte_lock": "a77eb3a523b58944817840cf36ed610b17c6d2ce4fbfef99230cc7dd76865deb"
+ },
+ "scope": "PER-STACK (stack_HASHED), az enumeralt 216-config-terre. NEM hordozhato formula."
+}
